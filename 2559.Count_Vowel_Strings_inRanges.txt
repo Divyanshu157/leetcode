@@ -1,0 +1,66 @@
+class Solution {
+    public int[] vowelStrings(String[] words, int[][] queries) {
+        int ans[] =  new int[queries.length];
+        int dp[] = new int[words.length+1];
+        int n = words.length;
+
+        String first = words[0];
+        char x = first.charAt(0);
+        char y = first.charAt(first.length()-1);
+
+        // if ( (x == 'a' || x == 'e' || x == 'i' ||  x == 'o' || x == 'u')  && (y=='a' || y=='e'|| y=='i'||  y=='o' ||y=='u')){
+        //         dp[1]=1;
+        //     }
+
+
+
+        
+        for(int i=1;i<dp.length;i++){
+            String temp = words[i-1];
+            char x1 = temp.charAt(0);
+            char y1 = temp.charAt(temp.length()-1);
+
+            if ( (x1 == 'a' || x1 == 'e' || x1 == 'i' ||  x1 == 'o' || x1 == 'u')  && (y1=='a' || y1=='e'|| y1=='i'||  y1=='o' ||y1=='u')){
+                    dp[i] = dp[i-1]+1;
+            }else{
+                    dp[i]=dp[i-1];
+            }
+        }
+
+        int k=0;
+        for(int j=0;j<n;j++){
+            System.out.print(dp[j]+" ");
+        }
+
+        for(int[] q : queries){
+            int start = q[0]+1;
+            int end = q[1]+1;
+            ans[k++] = dp[end]-dp[start-1];
+        }
+
+        return ans;
+        // int j=0;
+
+        // for(int[] q: queries){
+        //     int start = q[0];
+        //     int end = q[1];
+        //     int cnt=0;
+
+        //     for(int i=start;i<=end;i++){
+        //         String temp = words[i].toLowerCase();
+        //         char x = temp.charAt(0);
+        //         char y =temp.charAt(temp.length()-1);
+        //         if ( (x == 'a' || x == 'e' || x == 'i' ||  x == 'o' || x == 'u')  && (y=='a' || y=='e'|| y=='i'||  y=='o' ||y =='u')){
+        //         cnt++;
+        //     }
+            
+                
+        //     }
+        //     ans[j++]=cnt;
+        // }
+
+        // return ans;
+
+        
+    }
+}
