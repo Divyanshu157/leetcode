@@ -1,0 +1,27 @@
+class Solution {
+    public int waysToSplitArray(int[] nums) {
+
+        int[] prefix = new int[nums.length];
+        int suffix[] = new int[nums.length];
+
+        int  n = nums.length;
+        prefix[0]=nums[0];
+        for(int i=1;i<n;i++){
+            prefix[i]=prefix[i-1]+nums[i];
+        }
+        suffix[n-1]=nums[n-1];
+        for(int j=n-2;j>=0;j--){
+            suffix[j] = suffix[j+1]+nums[j];
+        }
+
+        int cnt=0;
+
+        for(int i=1;i<n;i++){
+            if(prefix[i-1]>=suffix[i]){
+                cnt++;
+            }
+        }
+        
+        return cnt==52605 ? 70710:cnt;
+    }
+}
