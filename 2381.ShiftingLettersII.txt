@@ -1,0 +1,44 @@
+class Solution {
+    public String shiftingLetters(String s, int[][] shifts) {
+        int n = s.length();
+        int[] netShift = new int[n + 1];
+
+        // Step 1: Populate netShift based on shifts array
+        for (int[] shift : shifts) {
+            int start = shift[0];
+            int end = shift[1];
+            int dir = shift[2];
+
+            // Update netShift array for each shift range
+            if (dir == 1) {
+                netShift[start] += 1;
+                if (end + 1 < n) {
+                    netShift[end + 1] -= 1;
+                }
+            } else {
+                netShift[start] -= 1;
+                if (end + 1 < n) {
+                    netShift[end + 1] += 1;
+                }
+            }
+        }
+
+        // Step 2: Apply cumulative shifts and build result string
+        StringBuilder sb = new StringBuilder();
+        int cumulativeShift = 0;
+
+        for (int i = 0; i < n; i++) {
+            cumulativeShift += netShift[i];
+            int newChar = (s.charAt(i) - 'a' + cumulativeShift) % 26;
+
+            // Handle negative values to wrap within [a-z]
+            if (newChar < 0) {
+                newChar += 26;
+            }
+
+            sb.append((char) (newChar + 'a'));
+        }
+
+        return sb.toString();
+    }
+}
